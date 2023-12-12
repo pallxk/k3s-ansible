@@ -174,7 +174,7 @@
       ansible.builtin.file:
         path: ~{{ ansible_user }}/.kube
         state: directory
-        owner: "{{ ansible_user }}"
+        owner: "{{ ansible_user | default(omit, true) }}"
         mode: "u=rwx,g=rx,o="
 
     - name: Copy config file to user home directory
@@ -182,7 +182,7 @@
         src: /etc/rancher/k3s/k3s.yaml
         dest: ~{{ ansible_user }}/.kube/config
         remote_src: true
-        owner: "{{ ansible_user }}"
+        owner: "{{ ansible_user | default(omit, true) }}"
         mode: "u=rw,g=,o="
 
     - name: Configure default KUBECONFIG for user
